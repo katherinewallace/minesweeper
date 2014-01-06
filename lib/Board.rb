@@ -36,7 +36,7 @@ class Board
 
   def render
     @grid.map do |row|
-      row.map { |tile| tile.status }
+      row.map { |tile| tile.bombed } # CHANGE!
     end
   end
 

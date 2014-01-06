@@ -1,19 +1,18 @@
 class Tile
-  attr_reader :status, :coordinates, :neighbors
+  attr_reader :status, :coordinates, :neighbors, :bombed # REMOVE
 
-  def initialize (coordinates, neighbors, status = :unrevealed)
+  def initialize (coordinates, neighbors, status = :unrevealed, bombed = :false)
     @status = status
+    @bombed = false
     @coordinates = coordinates
     @neighbors = neighbors
   end
 
   def reveal
-    if @status == :bombed
-      @status = :exploded
-    elsif @status == :unrevealed
+    unless @bombed
       @status = :revealed
-    end
-    @status
+    else
+      @status = :exploded
   end
 
   def neighbor_bomb_count
