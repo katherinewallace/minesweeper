@@ -1,9 +1,10 @@
 class Tile
-  attr_reader :status, :coordinates
+  attr_reader :status, :coordinates, :neighbors
 
-  def initialize (status = :unrevealed, coordinates)
+  def initialize (status = :unrevealed, coordinates, neighbors)
     @status = status
     @coordinates = coordinates
+    @neighbors = neighbors
   end
 
   def reveal
@@ -15,6 +16,12 @@ class Tile
     @status
   end
 
-
+  def neighbor_bomb_count
+    count = 0
+    @neighbors.each do |neighbor|
+      count += 1 if neighbor.status == :bombed
+    end
+    count
+  end
 
 end
