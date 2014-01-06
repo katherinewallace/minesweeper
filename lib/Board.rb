@@ -2,8 +2,8 @@ require './lib/Tile.rb'
 
 class Board
   attr_reader :grid
-  BOMB_NUM = 3
-  SIZE = [5,5]
+  BOMB_NUM = 3 # Refactor this
+  SIZE = [5,5] # Refactor this
   RENDER_SYM = {
     :revealed => '_',
     :unrevealed => '*',
@@ -15,10 +15,6 @@ class Board
     @grid = grid
     seed_bombs
     set_neighbors
-  end
-
-  def to_s #MAKE THIS MORE USEFUL
-    "hello, i'm a board"
   end
 
   def self.create_unseeded_grid
@@ -62,6 +58,26 @@ class Board
     @grid[pos[0]][pos[1]]
   end
 
+  def explore(pos)
+    self[pos].reveal
+    return if self.exploded?
+    explore_q = [self[pos]]
+    until explore_q.empty?
+      current_tile = explore_q.shift
+      next if current_tile.bombed
+      current_tile.reveal
+      if current_tile.neighbor_bomb_count == 0
+        unrevealed_neighbors = current_tile.neighbors.select
+        explore_q += unrevealed_neighbors(current_tile)
+      end
+    end
+    nil
+  end
+
+  def flag(pos)
+    # user can flag a tile
+  end
+
   def exploded?
     self.tiles.any? { |tile| tile.status == :exploded }
   end
@@ -69,6 +85,21 @@ class Board
   def cleared?
     self.tiles.all? { |tile| tile.status == :revealed ||
     tile.bombed == true }
+  end
+
+  def display
+    rendered = self.render
+    render.each do |row|
+      row.each do |symbol|
+        print symbol + ' '
+      end
+      puts
+    end
+    nil
+  end
+
+  def unrevealed_neighbors(tile)
+    tile.neighbors.select { |neighbor| neighbor.status == :unrevealed }
   end
 
   def render
@@ -82,17 +113,6 @@ class Board
         end
       end
     end
-  end
-
-  def display
-    rendered = self.render
-    render.each do |row|
-      row.each do |symbol|
-        print symbol + ' '
-      end
-      puts
-    end
-    nil
   end
 
 end

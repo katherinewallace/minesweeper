@@ -11,6 +11,14 @@ class Tile
     @neighbors = neighbors
   end
 
+  def to_s
+    String({
+      :coordinates => @coordinates,
+      :status => @status,
+      :bombed => @bombed
+      })
+  end
+
   def reveal
     unless self.bombed
       @status = :revealed
