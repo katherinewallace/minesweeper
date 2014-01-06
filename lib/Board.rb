@@ -44,6 +44,18 @@ class Board
     @grid = grid
   end
 
+  def tiles
+    @grid.flatten
+  end
+
+  # def set_neighbors
+  #   self.each do |tile|
+  #     current_coords = tile.coordinates
+  #     neighbors = tiles.select do |tile|
+  #       tile.coordinates[0] ==
+  #     end
+  #   end
+  # end
 
   def [](pos)
     # returns a Tile object
@@ -51,16 +63,12 @@ class Board
   end
 
   def exploded?
-    @grid.any? do |row|
-      row.any? { |tile| tile.status == :exploded }
-    end
+    self.tiles.any? { |tile| tile.status == :exploded }
   end
 
   def cleared?
-    @grid.all? do |row|
-      row.all? { |tile| tile.status == :revealed ||
-        tile.bombed == true}
-    end
+    self.tiles.all? { |tile| tile.status == :revealed ||
+    tile.bombed == true }
   end
 
   def render
