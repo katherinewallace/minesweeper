@@ -88,6 +88,7 @@ class Board
   end
 
   def display
+    puts
     rendered = self.render
     render.each do |row|
       row.each do |symbol|
