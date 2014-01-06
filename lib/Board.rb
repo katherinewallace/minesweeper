@@ -14,6 +14,7 @@ class Board
   def initialize(grid = self.class.create_unseeded_grid)
     @grid = grid
     seed_bombs
+    set_neighbors
     p @grid.map do |row|
       row.map { |tile| tile.bombed }
     end  # REMOVE THIS!!!!
@@ -48,14 +49,12 @@ class Board
     @grid.flatten
   end
 
-  # def set_neighbors
-  #   self.each do |tile|
-  #     current_coords = tile.coordinates
-  #     neighbors = tiles.select do |tile|
-  #       tile.coordinates[0] ==
-  #     end
-  #   end
-  # end
+  def set_neighbors
+    self.tiles.each do |tile|
+      tile.add_neighbors(self.tiles)
+    end
+    nil
+  end
 
   def [](pos)
     # returns a Tile object

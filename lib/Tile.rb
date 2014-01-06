@@ -1,5 +1,5 @@
 class Tile
-  attr_reader :status, :coordinates, :neighbors
+  attr_reader :status, :coordinates, :neighbors # REMOVE!!!
   attr_accessor :bombed
 
   def initialize (coordinates, neighbors, status = :unrevealed, bombed = :false)
@@ -17,16 +17,19 @@ class Tile
     end
   end
 
-  def add_neighbor(other_tile)
-    @neighbors << other_tile
-  end
-
   def neighbor_bomb_count
     count = 0
     @neighbors.each do |neighbor|
       count += 1 if neighbor.status == :bombed
     end
     count
+  end
+
+  def add_neighbors(other_tiles)
+    other_tiles.each do |other_tile|
+      next if other_tile == self
+      @neighbors << other_tile if adjacent?(other_tile)
+    end
   end
 
   private
