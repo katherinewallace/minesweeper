@@ -8,7 +8,9 @@ class Board
   def initialize(grid = self.class.create_unseeded_grid)
     @grid = grid
     seed_bombs
-    p self.render # REMOVE THIS
+    p @grid.map do |row|
+      row.map { |tile| tile.bombed }
+    end  # REMOVE THIS!!!!
   end
 
   def self.create_unseeded_grid
@@ -57,12 +59,30 @@ class Board
 
   def render
     @grid.map do |row|
-      row.map { |tile| tile.bombed } # CHANGE!
+      row.map do |tile|
+        neighbor_bombs = tile.neighbor_bomb_count
+        if  neighbor_bombs > 0
+          neighbor_bombs
+        elsif tile.status == :revealed
+          "_"
+        elsif tile.status == :exploded
+          "!"
+        else
+          "*"
+        end
+      end
     end
   end
 
   def display
-    # print out rendered board
+    rendered = self.render
+    render.each do |row|
+      row.each do |symbol|
+        print symbol + ' '
+      end
+      puts
+    end
+    nil
   end
 
 end
