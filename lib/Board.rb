@@ -56,17 +56,6 @@ class Board
 
   def explore(pos)
     self[pos].reveal
-    return if self.exploded?
-    explore_q = [self[pos]]
-    until explore_q.empty?
-      current_tile = explore_q.shift
-      next if current_tile.bombed
-      current_tile.reveal
-      if current_tile.neighbor_bomb_count == 0
-        unrevealed_neighbors = current_tile.neighbors.select
-        explore_q += unrevealed_neighbors(current_tile)
-      end
-    end
     nil
   end
 

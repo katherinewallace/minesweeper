@@ -20,13 +20,16 @@ class Tile
   end
 
   def reveal
+    return if self.status == revealed
     @status = self.bombed ? :exploded : :revealed
-
-    # unless self.bombed
-    #   @status = :revealed
-    # else
-    #   @status = :exploded
-    # end
+    return if status == :exploded
+    if neighbor_bomb_count == 0
+      @neighbors.each do |neighbor|
+        next if neighbor.bombed
+        neighbor.reveal
+      end
+    end
+    nil
   end
 
   def flag
@@ -41,12 +44,6 @@ class Tile
     @neighbors.inject(0) do |accum, neighbor|
       neighbor.bombed ? accum + 1 : accum
     end
-    #
-    # count = 0
-    # @neighbors.each do |neighbor|
-    #   count += 1 if neighbor.bombed == true
-    # end
-    # count
   end
 
   def add_neighbors(other_tiles)
