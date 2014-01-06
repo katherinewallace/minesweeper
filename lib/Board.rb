@@ -8,7 +8,7 @@ class Board
   def initialize(grid = self.class.create_unseeded_grid)
     @grid = grid
     seed_bombs
-    p self.render
+    p self.render # REMOVE THIS
   end
 
   def self.create_unseeded_grid
@@ -45,6 +45,13 @@ class Board
   def exploded?
     @grid.any? do |row|
       row.any? { |tile| tile.status == :exploded }
+    end
+  end
+
+  def cleared?
+    @grid.all? do |row|
+      row.all? { |tile| tile.status == :revealed ||
+        tile.bombed == true}
     end
   end
 
