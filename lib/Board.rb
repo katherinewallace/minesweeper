@@ -2,6 +2,7 @@ require './lib/Tile.rb'
 
 class Board
   attr_reader :grid
+  BOMB_NUM = 3
 
   def initialize(grid = self.class.create_unseeded_grid([3,3]))
     @grid = grid
@@ -18,12 +19,19 @@ class Board
     grid
   end
 
-  def self.seed_bombs(num_bombs)
-
+  def seed_bombs(num_bombs)
+    until seeeded_bombs == BOARD_NUM
+      # seed bombs
+    end
   end
 
   def [](pos)
-    # accesses Tile by coordinates
+    # returns a Tile object
+    @grid[pos[0]][pos[1]]
+  end
+
+  def exploded
+    # if any of the tiles have status exploded
   end
 
   def render
