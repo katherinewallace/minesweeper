@@ -1,16 +1,16 @@
 class Tile
   attr_reader :status, :coordinates, :neighbors
 
-  def initialize (status = :unrevealed, coordinates, neighbors)
+  def initialize (coordinates, neighbors, status = :unrevealed)
     @status = status
     @coordinates = coordinates
     @neighbors = neighbors
   end
 
   def reveal
-    if @status = :bombed
+    if @status == :bombed
       @status = :exploded
-    elsif @status = :unrevealed
+    elsif @status == :unrevealed
       @status = :revealed
     end
     @status
