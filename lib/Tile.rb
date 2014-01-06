@@ -1,3 +1,5 @@
+require 'debugger'
+
 class Tile
   attr_reader :status, :coordinates, :neighbors # REMOVE!!!
   attr_accessor :bombed
@@ -18,9 +20,10 @@ class Tile
   end
 
   def neighbor_bomb_count
+    # debugger #REMOVE
     count = 0
     @neighbors.each do |neighbor|
-      count += 1 if neighbor.status == :bombed
+      count += 1 if neighbor.bombed == true
     end
     count
   end
@@ -30,6 +33,7 @@ class Tile
       next if other_tile == self
       @neighbors << other_tile if adjacent?(other_tile)
     end
+    nil
   end
 
   private

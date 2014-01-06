@@ -3,7 +3,7 @@ require './lib/Tile.rb'
 class Board
   attr_reader :grid
   BOMB_NUM = 3
-  SIZE = [3,3]
+  SIZE = [5,5]
   RENDER_SYM = {
     :revealed => '_',
     :unrevealed => '*',
@@ -15,9 +15,10 @@ class Board
     @grid = grid
     seed_bombs
     set_neighbors
-    p @grid.map do |row|
-      row.map { |tile| tile.bombed }
-    end  # REMOVE THIS!!!!
+  end
+
+  def to_s #MAKE THIS MORE USEFUL
+    "hello, i'm a board"
   end
 
   def self.create_unseeded_grid
@@ -51,9 +52,9 @@ class Board
 
   def set_neighbors
     self.tiles.each do |tile|
-      tile.add_neighbors(self.tiles)
+      tile.add_neighbors(@grid.flatten)
     end
-    nil
+    @board
   end
 
   def [](pos)
@@ -74,7 +75,7 @@ class Board
     @grid.map do |row|
       row.map do |tile|
         neighbor_bombs = tile.neighbor_bomb_count
-        if  neighbor_bombs > 0
+        if  neighbor_bombs > 0 && tile.status == :revealed
           neighbor_bombs.to_s
         else
           RENDER_SYM[tile.status]
