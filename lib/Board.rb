@@ -75,7 +75,7 @@ class Board
   end
 
   def flag(pos)
-    # user can flag a tile
+    self[pos].flag
   end
 
   def exploded?

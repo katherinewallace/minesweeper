@@ -27,6 +27,10 @@ class Tile
     end
   end
 
+  def flag
+    @status = :flagged if @status = :unrevealed
+  end
+
   def neighbor_bomb_count
     # debugger #REMOVE
     count = 0
