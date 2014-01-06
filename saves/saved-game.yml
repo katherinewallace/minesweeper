@@ -1,0 +1,105 @@
+--- !ruby/object:Board
+grid:
+- - &70286566050400 !ruby/object:Tile
+    status: :revealed
+    bombed: false
+    coordinates:
+    - 0
+    - 0
+    neighbors:
+    - &70286566050260 !ruby/object:Tile
+      status: :unrevealed
+      bombed: false
+      coordinates:
+      - 0
+      - 1
+      neighbors:
+      - *70286566050400
+      - &70286566050140 !ruby/object:Tile
+        status: :unrevealed
+        bombed: true
+        coordinates:
+        - 0
+        - 2
+        neighbors:
+        - *70286566050260
+        - &70286566049840 !ruby/object:Tile
+          status: :unrevealed
+          bombed: false
+          coordinates:
+          - 1
+          - 1
+          neighbors:
+          - *70286566050400
+          - *70286566050260
+          - *70286566050140
+          - &70286566050060 !ruby/object:Tile
+            status: :unrevealed
+            bombed: true
+            coordinates:
+            - 1
+            - 0
+            neighbors:
+            - *70286566050400
+            - *70286566050260
+            - *70286566049840
+            - &70286566049440 !ruby/object:Tile
+              status: :unrevealed
+              bombed: false
+              coordinates:
+              - 2
+              - 0
+              neighbors:
+              - *70286566050060
+              - *70286566049840
+              - &70286566049360 !ruby/object:Tile
+                status: :unrevealed
+                bombed: false
+                coordinates:
+                - 2
+                - 1
+                neighbors:
+                - *70286566050060
+                - *70286566049840
+                - &70286566049660 !ruby/object:Tile
+                  status: :unrevealed
+                  bombed: false
+                  coordinates:
+                  - 1
+                  - 2
+                  neighbors:
+                  - *70286566050260
+                  - *70286566050140
+                  - *70286566049840
+                  - *70286566049360
+                  - &70286566049120 !ruby/object:Tile
+                    status: :unrevealed
+                    bombed: false
+                    coordinates:
+                    - 2
+                    - 2
+                    neighbors:
+                    - *70286566049840
+                    - *70286566049660
+                    - *70286566049360
+                - *70286566049440
+                - *70286566049120
+            - *70286566049360
+          - *70286566049660
+          - *70286566049440
+          - *70286566049360
+          - *70286566049120
+        - *70286566049660
+      - *70286566050060
+      - *70286566049840
+      - *70286566049660
+    - *70286566050060
+    - *70286566049840
+  - *70286566050260
+  - *70286566050140
+- - *70286566050060
+  - *70286566049840
+  - *70286566049660
+- - *70286566049440
+  - *70286566049360
+  - *70286566049120
