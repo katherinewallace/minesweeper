@@ -95,7 +95,7 @@ class Board
       end
       puts
     end
-    nil
+    puts
   end
 
   def unrevealed_neighbors(tile)

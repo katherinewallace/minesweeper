@@ -28,7 +28,8 @@ class Tile
   end
 
   def flag
-    @status = :flagged if @status = :unrevealed
+    @status = :flagged if @status == :unrevealed
+    @status = :unrevealed if @status == :flagged
   end
 
   def neighbor_bomb_count
