@@ -4,6 +4,12 @@ class Board
   attr_reader :grid
   BOMB_NUM = 3
   SIZE = [3,3]
+  RENDER_SYM = {
+    :revealed => '_',
+    :unrevealed => '*',
+    :exploded => '!',
+    :flagged => 'F',
+  }
 
   def initialize(grid = self.class.create_unseeded_grid)
     @grid = grid
@@ -62,13 +68,9 @@ class Board
       row.map do |tile|
         neighbor_bombs = tile.neighbor_bomb_count
         if  neighbor_bombs > 0
-          neighbor_bombs
-        elsif tile.status == :revealed
-          "_"
-        elsif tile.status == :exploded
-          "!"
+          neighbor_bombs.to_s
         else
-          "*"
+          RENDER_SYM[tile.status]
         end
       end
     end
