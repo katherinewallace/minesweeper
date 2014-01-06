@@ -1,8 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+require './lib/Board.rb'
+
 class Minesweeper
 
-  def initialize
-    @board = Board.new()
-
+  def initialize(board=nil)
+    board.nil? ? @board = Board.new() : @board = board
   end
 
   def run
@@ -10,6 +14,10 @@ class Minesweeper
     until @board.exploded? || @board.cleared?
       puts "Enter your move:"
       user_input = gets.chomp
+      if user_input == 'q'
+        save_game
+        return
+      end
       handle_input(user_input)
       @board.display
     end
@@ -32,4 +40,22 @@ class Minesweeper
     end
   end
 
+  def save_game
+    puts "Enter a file name:"
+    file_name = "./saves/#{gets.chomp}.yml"
+    File.open(file_name, "w") { |f| f.puts @board.to_yaml }
+  end
+
+end
+
+if __FILE__ == $PROGRAM_NAME
+  if ARGV.empty?
+    g = Minesweeper.new()
+    g.run
+  else
+    file_name = "./saves/#{ARGV.pop}.yml"
+    board = YAML.load_file(file_name)
+    g = Minesweeper.new(board)
+    g.run
+  end
 end

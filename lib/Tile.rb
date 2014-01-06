@@ -20,7 +20,7 @@ class Tile
   end
 
   def reveal
-    return if self.status == revealed
+    return if self.status == :revealed
     @status = self.bombed ? :exploded : :revealed
     return if status == :exploded
     if neighbor_bomb_count == 0
