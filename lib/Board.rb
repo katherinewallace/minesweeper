@@ -2,8 +2,6 @@ require './lib/Tile.rb'
 
 class Board
   attr_reader :grid
-  BOMB_NUM = 3 # Refactor this
-  SIZE = [5,5] # Refactor this
   RENDER_SYM = {
     :revealed => '_',
     :unrevealed => '*',
@@ -11,35 +9,34 @@ class Board
     :flagged => 'F',
   }
 
-  def initialize(grid = self.class.create_unseeded_grid)
+  def initialize(grid = self.class.create_unseeded_grid([3,3]), bomb_num = 2)
     @grid = grid
-    seed_bombs
+    seed_bombs(bomb_num)
     set_neighbors
   end
 
-  def self.create_unseeded_grid
+  def self.create_unseeded_grid(size)
     grid = []
-    SIZE[0].times do |x_coord|
+    size[0].times do |x_coord|
       grid[x_coord] = []
-      SIZE[1].times do |y_coord|
+      size[1].times do |y_coord|
         grid[x_coord] << Tile.new([x_coord, y_coord], [])
       end
     end
     grid
   end
 
-  def seed_bombs
+  def seed_bombs(bomb_num)
     seeded_bombs = 0
-    until seeded_bombs == BOMB_NUM
-      x_coord = rand(0...SIZE[0])
-      y_coord = rand(0...SIZE[1])
+    until seeded_bombs == bomb_num
+      x_coord = rand(0...@grid.length)
+      y_coord = rand(0...@grid.first.length)
       tile = self[[x_coord, y_coord]]
       unless tile.bombed
         tile.bombed = true
         seeded_bombs += 1
       end
     end
-    @grid = grid
   end
 
   def tiles
@@ -50,7 +47,6 @@ class Board
     self.tiles.each do |tile|
       tile.add_neighbors(@grid.flatten)
     end
-    @board
   end
 
   def [](pos)

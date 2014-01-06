@@ -1,7 +1,7 @@
 require 'debugger'
 
 class Tile
-  attr_reader :status, :coordinates, :neighbors # REMOVE!!!
+  attr_reader :status, :coordinates, :neighbors # REMOVE
   attr_accessor :bombed
 
   def initialize (coordinates, neighbors, status = :unrevealed, bombed = :false)
@@ -20,11 +20,13 @@ class Tile
   end
 
   def reveal
-    unless self.bombed
-      @status = :revealed
-    else
-      @status = :exploded
-    end
+    @status = self.bombed ? :exploded : :revealed
+
+    # unless self.bombed
+    #   @status = :revealed
+    # else
+    #   @status = :exploded
+    # end
   end
 
   def flag
@@ -36,12 +38,15 @@ class Tile
   end
 
   def neighbor_bomb_count
-    # debugger #REMOVE
-    count = 0
-    @neighbors.each do |neighbor|
-      count += 1 if neighbor.bombed == true
+    @neighbors.inject(0) do |accum, neighbor|
+      neighbor.bombed ? accum + 1 : accum
     end
-    count
+    #
+    # count = 0
+    # @neighbors.each do |neighbor|
+    #   count += 1 if neighbor.bombed == true
+    # end
+    # count
   end
 
   def add_neighbors(other_tiles)
